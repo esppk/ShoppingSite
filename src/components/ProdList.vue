@@ -12,16 +12,21 @@
             <div class="content">
               <p>{{ prod.title.slice(0, 12) }}</p>
               <div class="btnContainer">
-                <button class="button is-small">
-                  <i class="material-icons">
-                    favorite_border
-                  </i>
-                </button>
-                <button class="button is-small">
-                  <i class="material-icons">
-                    shopping_cart
-                  </i>
+                <p class="price has-text-weight-bold">
+                  ${{ Math.abs(Math.round(10*prod.albumId*Math.sin(prod.id))) }}
+                </p>
+                <div>
+                  <button class="button is-small">
+                    <i class="material-icons">
+                      favorite_border
+                    </i>
                   </button>
+                  <button class="button is-small" @click="addToCart(prod)">
+                    <i class="material-icons">
+                      shopping_cart
+                    </i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -33,7 +38,7 @@
         :current.sync="currentPage"
         order='is-centered'
 
-        rounded="isRounded"
+        :rounded="true"
         :per-page="perPage">
     </b-pagination>
   </section>
@@ -47,7 +52,8 @@ export default {
       prods: null,
       total: 5000,
       currentPage: 1,
-      perPage: 20
+      perPage: 20,
+      closeFunc: null
     };
   },
   created() {
@@ -66,6 +72,18 @@ export default {
         }&_limit=20`
       );
       this.prods = prods.data;
+    },
+    addToCart(prod) {
+      clearTimeout(this.closeFunc)
+      this.$store.commit("openCart")
+      this.$store.commit("addCart", prod);
+      this.closeFunc = setTimeout(()=>this.$store.commit("closeCart"), 5000)
+      this.$toast.open({
+              message: 'Add to Cart Successfully!',
+              type: 'is-success',
+              position: "is-top-right",
+              queue:false
+      })
     }
   }
 };
@@ -74,12 +92,12 @@ export default {
 <style lang="scss" scoped>
 .btnContainer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
-.material-icons{
+.material-icons {
   font-size: inherit;
 }
-.card-content{
+.card-content {
   padding-bottom: 0.5rem;
   padding-right: 0.5rem;
 }

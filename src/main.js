@@ -3,6 +3,7 @@
 import Vue from "vue";
 import App from "./App";
 import Buefy from "buefy";
+import store from "./store";
 import router from "./router";
 import "buefy/lib/buefy.css";
 import Vuikit from "vuikit";
@@ -15,5 +16,6 @@ Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");

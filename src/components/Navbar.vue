@@ -1,5 +1,5 @@
 <template>
-<vk-sticky show-on-up>
+<vk-sticky :top="200">
   <nav class="navbar is-transparent is-dark">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://bulma.io">
@@ -19,22 +19,36 @@
           Home
         </a>
       </div>
-
       <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="field is-grouped">
-            <p class="control">
-              <a class="bd-tw-button button" data-social-network="Twitter" data-social-action="tweet" data-social-target="http://localhost:4000" target="_blank" href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&amp;hashtags=bulmaio&amp;url=http://localhost:4000&amp;via=jgthms">
-                <span>
-                  Tweet
+        <div class="navbar-item has-dropdown is-hoverable" :class="isOpen">
+          <a class="is-dark is-outlined is-inverted navbar-link">
+              <span class="icon">
+                <i class="fas fa-shopping-cart"></i>
+              </span>
+              <span>Shopping Cart</span>
+          </a>
+          <div class="navbar-dropdown is-right">
+            <p v-if="shoppingCart.length===0" class="navbar-item"><strong>Nothing Here Yet!</strong></p>
+            <div class="navbar-item media" v-for="prod in shoppingCart" :key="prod.id">
+              <figure class="media-left">
+                <p class="image is-32x32">
+                  <img :src="prod.thumbnailUrl" alt="prodImg">
+                </p>
+              </figure>
+              <p class="cartPice">
+                <span>{{ prod.title.slice(0, 10) }}</span>
+                <span class="has-text-weight-bold">
+                ${{ Math.abs(Math.round(10*prod.albumId*Math.sin(prod.id))) }}
                 </span>
-              </a>
-            </p>
-            <p class="control">
-              <a class="button is-dark-outlined" href="https://github.com/jgthms/bulma/releases/download/0.7.1/bulma-0.7.1.zip">
-                <span>Shopping Cart</span>
-              </a>
-            </p>
+                <b-tag type="is-danger">{{ prod.count }}</b-tag>
+              </p>    
+            </div>
+            <hr class="navbar-divider">
+            <div class="navbar-item">
+              <a class="button is-danger is-outlined is-small is-fullwidth" 
+              @click="emptyCart"
+              >Empty Cart</a>
+            </div>
           </div>
         </div>
       </div>
@@ -51,6 +65,14 @@ export default {
       burgerToggle: ""
     };
   },
+  computed: {
+    shoppingCart(){
+      return this.$store.state.shoppingCart
+    },
+    isOpen(){
+      return this.$store.state.isCartOpen
+    }
+  },
   methods: {
     toggler() {
       if (!this.burgerToggle) {
@@ -58,6 +80,9 @@ export default {
       } else {
         this.burgerToggle = "";
       }
+    },
+    emptyCart(){
+      this.$store.commit("emptyCart")
     }
   }
 };
@@ -66,6 +91,14 @@ export default {
 <style lang="scss" scoped>
   .is-dark{
     opacity: 0.8;
+  }
+  .cartPice{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .navbar-dropdown{
+    width: 15rem;
   }
 </style>
 
