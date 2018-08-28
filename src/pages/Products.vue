@@ -1,6 +1,7 @@
 <template>
   <div>
     <Banner />
+    <UtilityHero />
     <div class="div container">
       <div class="columns">
         <NavList class="column is-one-quarter is-hidden-touch"/>
@@ -15,11 +16,13 @@
 import ProdList from "@/components/ProdList";
 import NavList from "@/components/NavList";
 import Banner from "@/components/Banner";
+import UtilityHero from "@/components/UtilityHero";
 export default {
   components: {
     NavList,
     ProdList,
-    Banner
+    Banner,
+    UtilityHero
   }
 };
 </script>

@@ -1,49 +1,59 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from "vue"
+import Vuex from "vuex"
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     isLogIn: false,
-    token: "",
-    userName: "Emrick",
     shoppingCart: [],
-    isCartOpen: ""
+    isCartOpen: "",
+    sortKey: ""
   },
   mutations: {
-    doLogIn(state) {
-      state.isLogIn = true;
-    },
-    logOut(state) {
-      state.isLogIn = false;
-    },
-    setToken(state, tok) {
-      state.token = tok;
-    },
     addCart(state, payload) {
-      let isAdded = false;
+      let isAdded = false
 
       state.shoppingCart.forEach(prod => {
         if (prod.id === payload.id) {
-          prod.count += 1;
-          isAdded = true;
+          prod.count += 1
+          isAdded = true
         }
-      });
-
+      })
       if (!isAdded) {
-        state.shoppingCart.push({ ...payload, count: 1 });
+        state.shoppingCart.push({ ...payload, count: 1 })
       }
     },
     emptyCart(state) {
-      state.shoppingCart = [];
+      state.shoppingCart = []
+    },
+    deductCart(state, payload) {
+      //let delIdx = null
+      state.shoppingCart.forEach(prod => {
+        if (prod.id === payload) {
+          prod.count -= 1
+          if (prod.count === 0) {
+            state.shoppingCart = state.shoppingCart.filter(
+              prod => prod.id !== payload
+            )
+          }
+        }
+      })
+    },
+    removeProd(state, payload) {
+      state.shoppingCart = state.shoppingCart.filter(
+        prod => prod.id !== payload
+      )
     },
     openCart(state) {
-      state.isCartOpen = "is-active";
+      state.isCartOpen = "is-active"
     },
     closeCart(state) {
-      state.isCartOpen = "";
+      state.isCartOpen = ""
+    },
+    setSortKey(state, payload) {
+      state.sortKey = payload
     }
   },
   actions: {}
-});
+})

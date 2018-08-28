@@ -4,13 +4,13 @@
       <div class="column is-one-quarter" v-for="prod in prods" :key="prod.id">
         <div class="card">
           <div class="card-image">
-            <figure class="image is-4by3">
+            <figure class="image is-4by3 toPointer" @click="goTo(prod.id)">
               <img :src="prod.url" alt="Placeholder image">
             </figure>
           </div>
           <div class="card-content">
             <div class="content">
-              <p>{{ prod.title.slice(0, 12) }}</p>
+              <p @click="goTo(prod.id)" class="toPointer">{{ prod.title.slice(0, 12) }}</p>
               <div class="btnContainer">
                 <p class="price has-text-weight-bold">
                   ${{ Math.abs(Math.round(10*prod.albumId*Math.sin(prod.id))) }}
@@ -56,18 +56,26 @@ export default {
       closeFunc: null
     };
   },
+  computed:{
+    sortKey(){
+      return this.$store.state.sortKey
+    }
+  },
   created() {
     this.getData();
   },
   watch: {
     currentPage() {
       this.getData();
+    },
+    sortKey(){
+      this.getData()
     }
   },
   methods: {
     async getData() {
       let prods = await axios.get(
-        `https://jsonplaceholder.typicode.com/photos?_page=${
+        `https://jsonplaceholder.typicode.com/photos?_sort=${this.sortKey}&_page=${
           this.currentPage
         }&_limit=20`
       );
@@ -77,13 +85,16 @@ export default {
       clearTimeout(this.closeFunc)
       this.$store.commit("openCart")
       this.$store.commit("addCart", prod);
-      this.closeFunc = setTimeout(()=>this.$store.commit("closeCart"), 5000)
+      this.closeFunc = setTimeout(()=>this.$store.commit("closeCart"), 3000)
       this.$toast.open({
               message: 'Add to Cart Successfully!',
               type: 'is-success',
               position: "is-top-right",
               queue:false
       })
+    },
+    goTo(id){
+      this.$router.push({ name: 'SingleProd', params: { id }})
     }
   }
 };
@@ -100,5 +111,8 @@ export default {
 .card-content {
   padding-bottom: 0.5rem;
   padding-right: 0.5rem;
+}
+.toPointer{
+  cursor: pointer;
 }
 </style>
