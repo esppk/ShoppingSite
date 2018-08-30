@@ -2,7 +2,7 @@
   <div>
     <Banner />
     <UtilityHero />
-    <div class="div container">
+    <div class="container">
       <div class="columns">
         <NavList class="column is-one-quarter is-hidden-touch"/>
         <ProdList class="column "/>
@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import ProdList from "@/components/ProdList";
-import NavList from "@/components/NavList";
-import Banner from "@/components/Banner";
-import UtilityHero from "@/components/UtilityHero";
+import ProdList from "@/components/ProdList"
+import NavList from "@/components/NavList"
+import Banner from "@/components/Banner"
+import UtilityHero from "@/components/UtilityHero"
 export default {
   components: {
     NavList,
@@ -24,7 +24,7 @@ export default {
     Banner,
     UtilityHero
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

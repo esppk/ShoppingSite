@@ -37,7 +37,6 @@
         :total="total"
         :current.sync="currentPage"
         order='is-centered'
-
         :rounded="true"
         :per-page="perPage">
     </b-pagination>
@@ -45,7 +44,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"
 export default {
   data() {
     return {
@@ -54,50 +53,50 @@ export default {
       currentPage: 1,
       perPage: 20,
       closeFunc: null
-    };
+    }
   },
-  computed:{
-    sortKey(){
+  computed: {
+    sortKey() {
       return this.$store.state.sortKey
     }
   },
   created() {
-    this.getData();
+    this.getData()
   },
   watch: {
     currentPage() {
-      this.getData();
+      this.getData()
     },
-    sortKey(){
+    sortKey() {
       this.getData()
     }
   },
   methods: {
     async getData() {
       let prods = await axios.get(
-        `https://jsonplaceholder.typicode.com/photos?_sort=${this.sortKey}&_page=${
-          this.currentPage
-        }&_limit=20`
-      );
-      this.prods = prods.data;
+        `https://jsonplaceholder.typicode.com/photos?_sort=${
+          this.sortKey
+        }&_page=${this.currentPage}&_limit=20`
+      )
+      this.prods = prods.data
     },
     addToCart(prod) {
       clearTimeout(this.closeFunc)
       this.$store.commit("openCart")
-      this.$store.commit("addCart", prod);
-      this.closeFunc = setTimeout(()=>this.$store.commit("closeCart"), 3000)
+      this.$store.commit("addCart", prod)
+      this.closeFunc = setTimeout(() => this.$store.commit("closeCart"), 3000)
       this.$toast.open({
-              message: 'Add to Cart Successfully!',
-              type: 'is-success',
-              position: "is-top-right",
-              queue:false
+        message: "Add to Cart Successfully!",
+        type: "is-success",
+        position: "is-top",
+        queue: false
       })
     },
-    goTo(id){
-      this.$router.push({ name: 'SingleProd', params: { id }})
+    goTo(id) {
+      this.$router.push({ name: "SingleProd", params: { id } })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -112,7 +111,7 @@ export default {
   padding-bottom: 0.5rem;
   padding-right: 0.5rem;
 }
-.toPointer{
+.toPointer {
   cursor: pointer;
 }
 </style>
