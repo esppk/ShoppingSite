@@ -15,10 +15,13 @@
         ${{ Math.abs(Math.round(10*prod.albumId*Math.sin(prod.id)))*prod.count }}
         </span>
     </div>
-    <p class="panel-heading has-text-weight-bold">
-      Summary
-    </p>
+    <div class="panel-heading has-text-weight-bold">
+      <p>Total:</p>
+      <p>{{ totalPrice }}</p>
+    </div>
+
     <div class="panel-block">
+      
       <button class="button is-success is-fullwidth"
       @click="$emit('checkout')"
       >CHECK OUT</button>
@@ -31,13 +34,19 @@ export default {
   computed: {
     shoppingCart() {
       return this.$store.state.shoppingCart
+    },
+    totalPrice(){
+      return this.shoppingCart.reduce((acc, prod) => {
+        return Math.abs(Math.round(10*prod.albumId*Math.sin(prod.id)))*prod.count + acc
+      }, 0)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.panel-block {
+.panel-block,
+.panel-heading {
   display: flex;
   justify-content: space-between;
   .totalPrice {
