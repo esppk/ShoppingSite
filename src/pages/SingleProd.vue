@@ -22,7 +22,7 @@
               v-model="selectedAmount"
               expanded>
                   <option
-                      v-for="option in amount"
+                    v-for="option in amount"
                       :value="option"
                       :key="option">
                       {{ option }}
@@ -68,6 +68,7 @@
         </div>
       </div>
     </section>
+
     <div class="content">
       <h1>Hello World</h1>
       <p>Lorem ipsum<sup><a>[1]</a></sup> dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque. Sub<sub>script</sub> works as well!</p>
@@ -141,7 +142,7 @@ export default {
 
 .level {
   margin: 5rem 0rem;
-  height: 10rem;
+  min-height: 10rem;
   background-image: url(https://images.pexels.com/photos/461302/pexels-photo-461302.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260);
   background-color: #777;
   background-size: cover;

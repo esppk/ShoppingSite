@@ -1,23 +1,23 @@
 <template>
   <div id="app">
     <Navbar/>
-      <router-view />
+    <router-view />
+    <FooterComp />
   </div>
 </template>
 
 <script>
 import Navbar from "./components/Navbar";
-
+import FooterComp from "./components/FooterComp";
 export default {
   name: "App",
   components: {
-    Navbar
+    Navbar,
+    FooterComp
   }
 };
 </script>
 
 <style>
-#app {
-  height: 200vh;
-}
+
 </style>

@@ -8,7 +8,6 @@
         <ProdList class="column "/>
       </div>
     </div>
-    
   </div>
 </template>
 
@@ -23,6 +22,11 @@ export default {
     ProdList,
     Banner,
     UtilityHero
+  },
+  mounted(){
+    this.$nextTick(
+      window.scrollTo(0,0)
+    )
   }
 }
 </script>

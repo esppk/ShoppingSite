@@ -19,9 +19,7 @@
       <p>Total:</p>
       <p>{{ totalPrice }}</p>
     </div>
-
     <div class="panel-block">
-      
       <button class="button is-success is-fullwidth"
       @click="$emit('checkout')"
       >CHECK OUT</button>
